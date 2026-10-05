@@ -1,2 +1,5 @@
-# badges-test
-test repo to create badges
+# badges
+
+repo to host badges of repos
+- release number
+
