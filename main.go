@@ -8,8 +8,10 @@ import (
 )
 
 const TEMPLATE_FILENAME = "./templates/badge.svg.template"
+const OUTPUT_DIRECTORY = "./docs/releases"
 
 type Release struct {
+	Name    string
 	Width   uint
 	Color   string
 	Version string
@@ -23,14 +25,14 @@ func main() {
 		return
 	}
 	fmt.Println("Template loaded!")
-	err = os.MkdirAll("docs/releases", os.ModePerm)
+	err = os.MkdirAll(OUTPUT_DIRECTORY, os.ModePerm)
 	if err != nil {
 		log.Print(err)
 		return
 	}
 
-	data := Release{100, "red", "1.1.3", 50}
-	outfile := "docs/releases/json2table.svg"
+	data := Release{"json2table", 100, "red", "1.1.3", 50}
+	outfile := fmt.Sprintf("%s/%s.svg", OUTPUT_DIRECTORY, data.Name)
 
 	file, err := os.OpenFile(outfile, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
 
