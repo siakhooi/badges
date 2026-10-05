@@ -14,18 +14,33 @@ type Release struct {
 	Version string
 	Center uint 
 }
+
+
 func main(){
-  fmt.Println("Hello, World!")
 	t, err := template.ParseFiles(TEMPLATE_FILENAME)
 	if err != nil {
 		log.Print(err)
 		return
 	}
 	fmt.Println("Template loaded!")
+	err = os.MkdirAll("docs/releases", os.ModePerm)
+	if err != nil {
+		log.Print(err)
+		return
+	}
 
 	data := Release{100, "red", "1.1.3", 50}
+  outfile := "docs/releases/json2table.svg"
 
-	err = t.Execute(os.Stdout, data)
+	file, err := os.OpenFile(outfile, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
+
+	if err != nil {
+		log.Print(err)
+		return
+	}
+	defer file.Close()
+
+	err = t.Execute(file, data)
 
 	if err != nil {
 		log.Print(err)
