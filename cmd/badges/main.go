@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -48,27 +47,31 @@ func main() {
 		}
 	}
 }
+func GetColor(version string) string {
+	return COLOR_GREEN
+}
+
 func GetBadges() ([]Badge, error) {
 	var badges []Badge
 
 	configraw, err := os.ReadFile(BADGES_CONFIG_FILE)
 	if err != nil {
 		log.Print(err)
-		return nil, errors.New(fmt.Sprintf("Fail to read config: %s", BADGES_CONFIG_FILE))
+		return nil, fmt.Errorf("Fail to read config: %s", BADGES_CONFIG_FILE)
 	}
 	var cfg Config
 	if err := yaml.Unmarshal(configraw, &cfg); err != nil {
 		log.Fatalf("error %v", err)
 	}
 	for _, repo := range cfg.Releases {
-		fmt.Printf("loop %s", repo)
 		badgeFile := fmt.Sprintf("%s/%s.svg", OUTPUT_DIRECTORY, repo)
 		release_version, _, err := GetReleaseVersion(repo)
 		if err != nil {
 			log.Print(err)
 			continue
 		}
-		data := Badge{repo, 50, COLOR_GREEN, release_version, 25, badgeFile}
+		color := GetColor(release_version)
+		data := Badge{repo, BADGE_WIDTH, color, release_version, BADGE_X, badgeFile}
 
 		badges = append(badges, data)
 
@@ -76,20 +79,4 @@ func GetBadges() ([]Badge, error) {
 
 	return badges, nil
 
-}
-func Generate(t *template.Template, data Badge) error {
-	file, err := os.OpenFile(data.BadgeFile, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
-
-	if err != nil {
-		return errors.New(fmt.Sprintf("Fail to open file: %s", data.BadgeFile))
-	}
-	defer file.Close()
-
-	err = t.Execute(file, data)
-	fmt.Printf("%s generated!\n", data.Repo)
-
-	if err != nil {
-		return errors.New(fmt.Sprintf("Fail to generate file: %s", data.BadgeFile))
-	}
-	return nil
 }

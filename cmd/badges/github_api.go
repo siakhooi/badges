@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 )
@@ -16,8 +15,6 @@ type GithubRelease struct {
 
 func GetReleaseVersion(repo string) (string, bool, error) {
 	url := fmt.Sprintf("https://api.github.com/repos/%s/%s/releases/latest", GITHUB_OWNER, repo)
-
-	log.Printf(url)
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
@@ -46,6 +43,7 @@ func GetReleaseVersion(repo string) (string, bool, error) {
 		return "", true, err
 
 	}
+	fmt.Printf("Github Release: %s %s %v\n", repo, release.TagName, release.Prerelease)
 
 	return release.TagName, release.Prerelease, nil
 }

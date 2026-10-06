@@ -2,8 +2,11 @@ default:
   @just --list
 
 source := "./cmd/badges"
-run:
+
+format:
   gofmt -w -s {{ source }}
+
+run: clean format
   go run {{ source }}
 
 clean:

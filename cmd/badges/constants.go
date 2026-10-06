@@ -8,3 +8,5 @@ const COLOR_YELLOW = "#dfb317"
 const COLOR_ORANGE = "#fe7d37"
 const COLOR_GREY = "#9f9f9f"
 const GITHUB_OWNER = "siakhooi"
+const BADGE_WIDTH = 50
+const BADGE_X = 25
