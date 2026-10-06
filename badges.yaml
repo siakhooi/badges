@@ -7,4 +7,6 @@ releases:
   - path2json
   - query
   - webcounter
+  - gh-pr
+
 
