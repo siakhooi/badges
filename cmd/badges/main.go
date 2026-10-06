@@ -12,12 +12,12 @@ const OUTPUT_DIRECTORY = "./docs/releases"
 const COLOR_GREEN = "#4c1"
 const COLOR_YELLOW = "#dfb317"
 
-type Release struct {
+type Badge struct {
 	Name    string
-	Width   uint
+	Width   float32
 	Color   string
 	Version string
-	Center  uint
+	Center  float32
 }
 
 func main() {
@@ -33,7 +33,7 @@ func main() {
 		return
 	}
 
-	data := Release{"json2table", 100, COLOR_GREEN, "1.1.3", 50}
+	data := Badge{"json2table", 50, COLOR_GREEN, "1.1.3", 25}
 	outfile := fmt.Sprintf("%s/%s.svg", OUTPUT_DIRECTORY, data.Name)
 
 	file, err := os.OpenFile(outfile, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
