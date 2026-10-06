@@ -15,8 +15,7 @@ type GithubRelease struct {
 }
 
 func GetReleaseVersion(repo string) (string, bool, error) {
-	owner := "siakhooi"
-	url := fmt.Sprintf("https://api.github.com/repos/%s/%s/releases/latest", owner, repo)
+	url := fmt.Sprintf("https://api.github.com/repos/%s/%s/releases/latest", GITHUB_OWNER, repo)
 
 	log.Printf(url)
 
