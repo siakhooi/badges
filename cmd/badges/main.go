@@ -9,6 +9,8 @@ import (
 
 const TEMPLATE_FILENAME = "./templates/release.svg.template"
 const OUTPUT_DIRECTORY = "./docs/releases"
+const COLOR_GREEN = "#4c1"
+const COLOR_YELLOW = "#dfb317"
 
 type Release struct {
 	Name    string
@@ -31,7 +33,7 @@ func main() {
 		return
 	}
 
-	data := Release{"json2table", 100, "red", "1.1.3", 50}
+	data := Release{"json2table", 100, COLOR_GREEN, "1.1.3", 50}
 	outfile := fmt.Sprintf("%s/%s.svg", OUTPUT_DIRECTORY, data.Name)
 
 	file, err := os.OpenFile(outfile, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
@@ -43,6 +45,7 @@ func main() {
 	defer file.Close()
 
 	err = t.Execute(file, data)
+	fmt.Printf("%s generated!\n", data.Name)
 
 	if err != nil {
 		log.Print(err)
