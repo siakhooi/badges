@@ -5,6 +5,7 @@ import (
 	"gopkg.in/yaml.v3"
 	"log"
 	"os"
+	"strings"
 )
 
 func GetReleaseBadges() ([]Badge, error) {
@@ -26,6 +27,7 @@ func GetReleaseBadges() ([]Badge, error) {
 			continue
 		}
 		color := GetColor(release_version)
+		release_version = strings.TrimPrefix(release_version, "v")
 		data := Badge{repo, BADGE_WIDTH, color, release_version, BADGE_X, badgeFile}
 
 		badges = append(badges, data)
