@@ -36,7 +36,9 @@ func main() {
 
 	data := Badge{"json2table", 50, COLOR_GREEN, "1.1.3", 25, ""}
 	data.BadgeFile = fmt.Sprintf("%s/%s.svg", OUTPUT_DIRECTORY, data.Repo)
-
+	generate(t, data)
+}
+func generate(t *template.Template, data Badge) {
 	file, err := os.OpenFile(data.BadgeFile, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
 
 	if err != nil {
