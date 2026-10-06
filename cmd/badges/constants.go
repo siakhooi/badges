@@ -2,6 +2,7 @@ package main
 
 const BADGES_CONFIG_FILE = "./badges.yaml"
 const TEMPLATE_FILENAME = "./templates/release.svg.template"
+const INDEX_HTML_FILENAME = "./templates/index.html.template"
 const OUTPUT_DIRECTORY = "./docs/releases"
 const COLOR_GREEN = "#4c1"
 const COLOR_YELLOW = "#dfb317"

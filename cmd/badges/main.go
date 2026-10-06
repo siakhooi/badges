@@ -19,7 +19,15 @@ type Badge struct {
 	BadgeFile string
 }
 
+func generateIndexHtml() {
+	fmt.Println("TODO")
+}
 func main() {
+	generateReleaseBadges()
+	generateIndexHtml()
+}
+func generateReleaseBadges() {
+
 	t, err := template.ParseFiles(TEMPLATE_FILENAME)
 	if err != nil {
 		log.Print(err)
