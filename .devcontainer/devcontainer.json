@@ -1,0 +1,28 @@
+{
+  "name": "GO 1.26 On Ubuntu 26.04 Development Dev Container",
+  "image": "siakhooi/devcontainer:go126_2604",
+  "remoteUser": "maui",
+  "containerUser": "maui",
+  "updateRemoteUserUID": true,
+  "features": {},
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "lfm.vscode-makefile-term",
+        "yzhang.markdown-all-in-one",
+        "redhat.vscode-yaml",
+        "golang.go",
+        "humao.rest-client",
+        "ms-vscode.live-server"
+      ]
+    }
+  },
+  "mounts": [
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/maui/.ssh,type=bind,consistency=cached",
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+  ],
+  "postStartCommand": "sudo chmod 666 /var/run/docker.sock || true",
+  "remoteEnv": {
+    "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+  }
+}
