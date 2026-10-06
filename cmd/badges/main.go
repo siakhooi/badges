@@ -13,11 +13,12 @@ const COLOR_GREEN = "#4c1"
 const COLOR_YELLOW = "#dfb317"
 
 type Badge struct {
-	Name    string
-	Width   float32
-	Color   string
-	Version string
-	Center  float32
+	Repo      string
+	Width     float32
+	Color     string
+	Version   string
+	Center    float32
+	BadgeFile string
 }
 
 func main() {
@@ -33,10 +34,10 @@ func main() {
 		return
 	}
 
-	data := Badge{"json2table", 50, COLOR_GREEN, "1.1.3", 25}
-	outfile := fmt.Sprintf("%s/%s.svg", OUTPUT_DIRECTORY, data.Name)
+	data := Badge{"json2table", 50, COLOR_GREEN, "1.1.3", 25, ""}
+	data.BadgeFile = fmt.Sprintf("%s/%s.svg", OUTPUT_DIRECTORY, data.Repo)
 
-	file, err := os.OpenFile(outfile, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
+	file, err := os.OpenFile(data.BadgeFile, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
 
 	if err != nil {
 		log.Print(err)
@@ -45,7 +46,7 @@ func main() {
 	defer file.Close()
 
 	err = t.Execute(file, data)
-	fmt.Printf("%s generated!\n", data.Name)
+	fmt.Printf("%s generated!\n", data.Repo)
 
 	if err != nil {
 		log.Print(err)
