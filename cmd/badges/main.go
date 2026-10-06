@@ -7,7 +7,7 @@ import (
 	"text/template"
 )
 
-const TEMPLATE_FILENAME = "./templates/badge.svg.template"
+const TEMPLATE_FILENAME = "./templates/release.svg.template"
 const OUTPUT_DIRECTORY = "./docs/releases"
 
 type Release struct {

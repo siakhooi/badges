@@ -1,9 +1,10 @@
 default:
   @just --list
 
+source := "./cmd/badges"
 run:
-  gofmt -w -s .
-  go run .
+  gofmt -w -s {{ source }}
+  go run {{ source }}
 
 clean:
   rm -rf docs
