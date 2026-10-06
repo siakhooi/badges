@@ -15,6 +15,8 @@ const TEMPLATE_FILENAME = "./templates/release.svg.template"
 const OUTPUT_DIRECTORY = "./docs/releases"
 const COLOR_GREEN = "#4c1"
 const COLOR_YELLOW = "#dfb317"
+const COLOR_ORANGE = "#fe7d37"
+const COLOR_GREY = "#9f9f9f"
 
 type Config struct {
 	Releases []string `yaml:"releases"`
@@ -64,24 +66,21 @@ func GetBadges() ([]Badge, error) {
 	}
 	var cfg Config
 	if err := yaml.Unmarshal(configraw, &cfg); err != nil {
-		log.Fatalf("erro %v", err)
+		log.Fatalf("error %v", err)
 	}
-	for _, release := range cfg.Releases {
-		badgeFile := fmt.Sprintf("%s/%s.svg", OUTPUT_DIRECTORY, release)
-		data := Badge{release, 50, COLOR_GREEN, "1.1.3", 25, badgeFile}
+	for _, repo := range cfg.Releases {
+		fmt.Printf("loop %s", repo)
+		badgeFile := fmt.Sprintf("%s/%s.svg", OUTPUT_DIRECTORY, repo)
+		release_version, _, err := GetReleaseVersion(repo)
+		if err != nil {
+			log.Print(err)
+			continue
+		}
+		data := Badge{repo, 50, COLOR_GREEN, release_version, 25, badgeFile}
 
 		badges = append(badges, data)
 
 	}
-
-	//data := Badge{"json2table", 50, COLOR_GREEN, "1.1.3", 25, ""}
-	//data.BadgeFile = fmt.Sprintf("%s/%s.svg", OUTPUT_DIRECTORY, data.Repo)
-
-	//badges = append(badges, data)
-
-	//data = Badge{"fibo-planner", 50, COLOR_YELLOW, "0.1.3", 25, ""}
-	//data.BadgeFile = fmt.Sprintf("%s/%s.svg", OUTPUT_DIRECTORY, data.Repo)
-	//badges = append(badges, data)
 
 	return badges, nil
 

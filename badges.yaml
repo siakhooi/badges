@@ -1,5 +1,10 @@
 releases:
   - json2table
   - picsum
+  - fibo-planner
   - jexl-executor
+  - semvery
+  - path2json
+  - query
+  - webcounter
 
