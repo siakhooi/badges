@@ -6,13 +6,19 @@ import (
 	"log"
 	"os"
 	"text/template"
+
+	"gopkg.in/yaml.v3"
 )
 
+const BADGES_CONFIG_FILE = "./badges.yaml"
 const TEMPLATE_FILENAME = "./templates/release.svg.template"
 const OUTPUT_DIRECTORY = "./docs/releases"
 const COLOR_GREEN = "#4c1"
 const COLOR_YELLOW = "#dfb317"
 
+type Config struct {
+	Releases []string `yaml:"releases"`
+}
 type Badge struct {
 	Repo      string
 	Width     float32
@@ -35,7 +41,11 @@ func main() {
 		return
 	}
 
-	badges := GetBadges()
+	badges, err1 := GetBadges()
+	if err1 != nil {
+		log.Print(err1)
+		return
+	}
 
 	for _, badge := range badges {
 		err = Generate(t, badge)
@@ -44,19 +54,36 @@ func main() {
 		}
 	}
 }
-func GetBadges() []Badge {
+func GetBadges() ([]Badge, error) {
 	var badges []Badge
 
-	data := Badge{"json2table", 50, COLOR_GREEN, "1.1.3", 25, ""}
-	data.BadgeFile = fmt.Sprintf("%s/%s.svg", OUTPUT_DIRECTORY, data.Repo)
+	configraw, err := os.ReadFile(BADGES_CONFIG_FILE)
+	if err != nil {
+		log.Print(err)
+		return nil, errors.New(fmt.Sprintf("Fail to read config: %s", BADGES_CONFIG_FILE))
+	}
+	var cfg Config
+	if err := yaml.Unmarshal(configraw, &cfg); err != nil {
+		log.Fatalf("erro %v", err)
+	}
+	for _, release := range cfg.Releases {
+		badgeFile := fmt.Sprintf("%s/%s.svg", OUTPUT_DIRECTORY, release)
+		data := Badge{release, 50, COLOR_GREEN, "1.1.3", 25, badgeFile}
 
-	badges = append(badges, data)
+		badges = append(badges, data)
 
-	data = Badge{"fibo-planner", 50, COLOR_YELLOW, "0.1.3", 25, ""}
-	data.BadgeFile = fmt.Sprintf("%s/%s.svg", OUTPUT_DIRECTORY, data.Repo)
-	badges = append(badges, data)
+	}
 
-	return badges
+	//data := Badge{"json2table", 50, COLOR_GREEN, "1.1.3", 25, ""}
+	//data.BadgeFile = fmt.Sprintf("%s/%s.svg", OUTPUT_DIRECTORY, data.Repo)
+
+	//badges = append(badges, data)
+
+	//data = Badge{"fibo-planner", 50, COLOR_YELLOW, "0.1.3", 25, ""}
+	//data.BadgeFile = fmt.Sprintf("%s/%s.svg", OUTPUT_DIRECTORY, data.Repo)
+	//badges = append(badges, data)
+
+	return badges, nil
 
 }
 func Generate(t *template.Template, data Badge) error {
