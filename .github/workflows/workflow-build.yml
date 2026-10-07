@@ -1,8 +1,9 @@
 name: Build
 on:
-  push:
-    branches:
-      - "main"
+  schedule:
+    - cron: '57 23 * * *'
+      timezone: 'Asia/Kuala_Lumpur'
+  workflow_dispatch:
 
 permissions:
   contents: read
