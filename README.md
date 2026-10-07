@@ -1,7 +1,7 @@
 # badges
 
 repo to host badges of repos
-- release number
+- release versions
 
 ## Badges
 ![License](https://img.shields.io/github/license/siakhooi/badges?logo=github)
