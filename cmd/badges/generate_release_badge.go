@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"html/template"
+	"os"
 )
 
 func GenerateReleaseBadge(t *template.Template, data Badge) error {

@@ -17,7 +17,7 @@ var errNoRelease = errors.New("no release")
 const GITHUB_API = "https://api.github.com"
 const GITHUB_OWNER = "siakhooi"
 
-func GetReleaseVersion(token string, repo string) (string, bool, error) {
+func GetReleaseVersion(token, repo string) (string, bool, error) {
 	url := fmt.Sprintf("%s/repos/%s/%s/releases/latest", GITHUB_API, GITHUB_OWNER, repo)
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)

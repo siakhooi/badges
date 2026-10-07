@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"log"
 	"os"
-	"html/template"
 )
 
 type Badge struct {
