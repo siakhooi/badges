@@ -43,7 +43,7 @@ func GetReleaseVersion(repo string) (string, bool, error) {
 		return "", true, err
 
 	}
-	fmt.Printf("Github Release: %s %s %v\n", repo, release.TagName, release.Prerelease)
+	fmt.Printf("Github Release Retrieved: %s %s %v\n", repo, release.TagName, release.Prerelease)
 
 	return release.TagName, release.Prerelease, nil
 }

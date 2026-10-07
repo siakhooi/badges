@@ -16,35 +16,48 @@ type Badge struct {
 	BadgeFile string
 }
 
-func generateIndexHtml() {
-	fmt.Println("TODO")
-}
 func main() {
-	generateReleaseBadges()
-	generateIndexHtml()
-}
-func generateReleaseBadges() {
-
-	t, err := template.ParseFiles(TEMPLATE_FILENAME)
+	cfg, err := GetConfig()
 	if err != nil {
 		log.Print(err)
 		return
 	}
-	fmt.Println("Template loaded!")
 	err = os.MkdirAll(OUTPUT_DIRECTORY, os.ModePerm)
 	if err != nil {
 		log.Print(err)
 		return
 	}
 
-	badges, err1 := GetReleaseBadges()
+	generateIndexHtml(cfg)
+	generateReleaseBadges(cfg)
+}
+func generateIndexHtml(cfg Config) {
+	t, err := template.ParseFiles(INDEX_HTML_TEMPLATE)
+	if err != nil {
+		log.Print(err)
+		return
+	}
+	fmt.Println("Index.html Template loaded!")
+	GenerateIndexHtml(t, cfg)
+}
+
+func generateReleaseBadges(cfg Config) {
+
+	t, err := template.ParseFiles(RELEASE_BADGE_TEMPLATE)
+	if err != nil {
+		log.Print(err)
+		return
+	}
+	fmt.Println("Release Badge Template loaded!")
+
+	badges, err1 := GetReleaseBadges(cfg)
 	if err1 != nil {
 		log.Print(err1)
 		return
 	}
 
 	for _, badge := range badges {
-		err = Generate(t, badge)
+		err = GenerateReleaseBadge(t, badge)
 		if err != nil {
 			log.Print(err)
 		}

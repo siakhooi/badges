@@ -6,13 +6,8 @@ import (
 	"strings"
 )
 
-func GetReleaseBadges() ([]Badge, error) {
+func GetReleaseBadges(cfg Config) ([]Badge, error) {
 	var badges []Badge
-
-	cfg, err := GetConfig()
-	if err != nil {
-		return nil, err
-	}
 
 	for _, repo := range cfg.Releases {
 		badgeFile := fmt.Sprintf("%s/%s.svg", OUTPUT_DIRECTORY, repo)
