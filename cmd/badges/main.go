@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"text/template"
+	"html/template"
 )
 
 type Badge struct {
@@ -30,16 +30,19 @@ func main() {
 		log.Fatal(err)
 	}
 
-	generateIndexHtml(cfg)
+	generateIndexHtmlPage(cfg)
 	generateReleaseBadges(token, cfg)
 }
-func generateIndexHtml(cfg Config) {
+func generateIndexHtmlPage(cfg Config) {
 	t, err := template.ParseFiles(INDEX_HTML_TEMPLATE)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println("Index.html Template loaded!")
-	GenerateIndexHtml(t, cfg)
+	err = GenerateIndexHtml(t, cfg)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func generateReleaseBadges(token string, cfg Config) {

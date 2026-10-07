@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
-	"text/template"
+	"html/template"
 )
 
 func GenerateReleaseBadge(t *template.Template, data Badge) error {
