@@ -3,6 +3,6 @@
 <body>
 <h1>Badges</h1>
 <h2>Releases</h2>
-{{ range .Releases }}<div><img src="releases/{{ . }}.svg" /> {{.}}</div>
+{{ range .Releases }}<div><img src="releases/{{ . }}.svg" /> <a href="https://github.com/siakhooi/{{.}}">https://github.com/siakhooi/{{.}}</a></div>
 {{ end }}</body>
 </html>

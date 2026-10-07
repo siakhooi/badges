@@ -12,14 +12,15 @@ func GetReleaseBadges(cfg Config) ([]Badge, error) {
 	for _, repo := range cfg.Releases {
 		badgeFile := fmt.Sprintf("%s/%s.svg", OUTPUT_DIRECTORY, repo)
 		release_version, _, err := GetReleaseVersion(repo)
+		color := COLOR_GREY
 		if err != nil {
 			log.Print(err)
-			continue
+			release_version = "---"
+		} else {
+			color = GetColor(release_version)
+			release_version = strings.TrimPrefix(release_version, "v")
 		}
-		color := GetColor(release_version)
-		release_version = strings.TrimPrefix(release_version, "v")
 		data := Badge{repo, BADGE_WIDTH, color, release_version, BADGE_X, badgeFile}
-
 		badges = append(badges, data)
 
 	}

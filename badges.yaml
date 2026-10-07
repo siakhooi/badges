@@ -2,11 +2,29 @@ releases:
   - json2table
   - picsum
   - fibo-planner
+  - cooonfig
   - jexl-executor
   - semvery
   - path2json
   - query
   - webcounter
   - gh-pr
+  - box-drawing
+  - number-to-chinese-words
+  - download-files-by-map
+  - kafka-republisher
+  - kafka-collector
+  - kafka-emulator
+  - collector-to-emulator
+  - htmligator
+  - terminalizer2asciinema
+  - configmap-reader
+  - bpmn-print
+  - publish-to-repo-action
+  - console
+  - mcp-mariadb
+  - shed
+  - ele
+
 
 
