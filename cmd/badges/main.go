@@ -7,9 +7,6 @@ import (
 	"text/template"
 )
 
-type Config struct {
-	Releases []string `yaml:"releases"`
-}
 type Badge struct {
 	Repo      string
 	Width     float32
