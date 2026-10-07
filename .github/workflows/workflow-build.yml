@@ -24,9 +24,11 @@ jobs:
         with:
           go-version-file: go.mod
 
-      - run: gofmt -d -s .
+      - run: scripts/fmt-check.sh 
 
       - run: go run ./cmd/badges
+        env:
+          GITHUB_TOKEN: ${{ secrets.READ_ALL_REPO_GITHUB_TOKEN }}
 
       - run: find docs
 

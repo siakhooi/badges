@@ -17,49 +17,49 @@ type Badge struct {
 }
 
 func main() {
+	token, exists := os.LookupEnv("GITHUB_TOKEN")
+	if !exists || token == "" {
+		log.Fatal("GITHUB_TOKEN not set")
+	}
 	cfg, err := GetConfig()
 	if err != nil {
-		log.Print(err)
-		return
+		log.Fatal(err)
 	}
 	err = os.MkdirAll(OUTPUT_DIRECTORY, os.ModePerm)
 	if err != nil {
-		log.Print(err)
-		return
+		log.Fatal(err)
 	}
 
 	generateIndexHtml(cfg)
-	generateReleaseBadges(cfg)
+	generateReleaseBadges(token, cfg)
 }
 func generateIndexHtml(cfg Config) {
 	t, err := template.ParseFiles(INDEX_HTML_TEMPLATE)
 	if err != nil {
-		log.Print(err)
-		return
+		log.Fatal(err)
 	}
 	fmt.Println("Index.html Template loaded!")
 	GenerateIndexHtml(t, cfg)
 }
 
-func generateReleaseBadges(cfg Config) {
+func generateReleaseBadges(token string, cfg Config) {
 
 	t, err := template.ParseFiles(RELEASE_BADGE_TEMPLATE)
 	if err != nil {
-		log.Print(err)
-		return
+		log.Fatal(err)
 	}
 	fmt.Println("Release Badge Template loaded!")
 
-	badges, err1 := GetReleaseBadges(cfg)
-	if err1 != nil {
-		log.Print(err1)
-		return
-	}
+	badges, lookupErr := GetReleaseBadges(token, cfg)
 
 	for _, badge := range badges {
 		err = GenerateReleaseBadge(t, badge)
 		if err != nil {
-			log.Print(err)
+			log.Printf("Fail to generate release badge for %s: %v", badge.Repo, err)
 		}
 	}
+	if lookupErr != nil {
+		log.Fatal(lookupErr)
+	}
+
 }

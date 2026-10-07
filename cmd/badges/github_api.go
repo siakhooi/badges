@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"os"
 )
 
 type GithubRelease struct {
@@ -13,16 +12,17 @@ type GithubRelease struct {
 	Prerelease bool   `json:"prerelease"`
 }
 
-func GetReleaseVersion(repo string) (string, bool, error) {
-	url := fmt.Sprintf("https://api.github.com/repos/%s/%s/releases/latest", GITHUB_OWNER, repo)
+var errNoRelease = errors.New("no release")
+
+const GITHUB_API = "https://api.github.com"
+const GITHUB_OWNER = "siakhooi"
+
+func GetReleaseVersion(token string, repo string) (string, bool, error) {
+	url := fmt.Sprintf("%s/repos/%s/%s/releases/latest", GITHUB_API, GITHUB_OWNER, repo)
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return "", true, err
-	}
-	token, exists := os.LookupEnv("GITHUB_TOKEN")
-	if !exists {
-		return "", true, errors.New("GITHUB_TOKEN not set")
 	}
 
 	req.Header.Set("Accept", "application/vnd.github+json")
@@ -35,6 +35,9 @@ func GetReleaseVersion(repo string) (string, bool, error) {
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode == http.StatusNotFound {
+		return "", true, errNoRelease
+	}
 	if resp.StatusCode != http.StatusOK {
 		return "", true, fmt.Errorf("Github API returned %s", resp.Status)
 	}
