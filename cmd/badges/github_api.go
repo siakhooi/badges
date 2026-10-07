@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"time"
 )
 
 type GithubRelease struct {
@@ -29,7 +30,9 @@ func GetReleaseVersion(token, repo string) (string, bool, error) {
 	req.Header.Set("Authorization", "Bearer "+token)
 	req.Header.Set("X-GitHub-Api-Version", "2026-03-10")
 
-	resp, err := http.DefaultClient.Do(req)
+	var githubClient = &http.Client{Timeout: 30 * time.Second}
+
+	resp, err := githubClient.Do(req)
 	if err != nil {
 		return "", true, err
 	}
