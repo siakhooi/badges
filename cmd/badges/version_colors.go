@@ -1,8 +1,9 @@
 package main
 
 import (
-	"golang.org/x/mod/semver"
 	"strings"
+
+	"golang.org/x/mod/semver"
 )
 
 func normalizeVersion(v string) string {
@@ -18,14 +19,14 @@ func GetColor(version string) string {
 	if semver.IsValid(v) {
 		if semver.Compare(v, "v1.0.0") >= 0 {
 			if semver.Prerelease(v) == "" {
-				return COLOR_GREEN
+				return COLOR_STABLE
 			} else {
-				return COLOR_ORANGE
+				return COLOR_STABLE_BETA
 			}
 		} else {
-			return COLOR_YELLOW
+			return COLOR_PRE_STABLE
 		}
 
 	}
-	return COLOR_GREY
+	return COLOR_UNKNOWN
 }
