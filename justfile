@@ -11,3 +11,6 @@ run: clean format
 
 clean:
   rm -rf docs
+
+build: clean format
+  go build -o /dev/null {{ source }}
