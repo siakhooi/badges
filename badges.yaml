@@ -36,4 +36,14 @@ releases:
   - fileutils
   - date-formats
   - echo-colors
+  - go-cli-template
+  - go-web-template
+  - apt-template
+  - bash-nfpm-template
+  - typescript-cli-template
+  - docker-image-template
+  - wasm-c-template
+  - python-cli-template
+  - github-action-bash-template
+  - codility-java-template
 
