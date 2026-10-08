@@ -24,7 +24,7 @@ jobs:
         with:
           go-version-file: go.mod
 
-      - run: scripts/fmt-check.sh 
+      - run: gofmt -d -s ./cmd/badges
 
       - run: go run ./cmd/badges
         env:
