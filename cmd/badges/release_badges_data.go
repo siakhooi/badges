@@ -15,7 +15,7 @@ func GetReleaseBadges(token string, cfg Config) ([]Badge, error) {
 	for _, repo := range cfg.Releases {
 		badgeFile := fmt.Sprintf("%s/%s.svg", OUTPUT_DIRECTORY, repo)
 		release_version, err := GetReleaseVersion(token, repo)
-		color := COLOR_GREY
+		color := COLOR_UNKNOWN
 		if err != nil {
 			err = fmt.Errorf("%s: %w", repo, err)
 			log.Print(err)
