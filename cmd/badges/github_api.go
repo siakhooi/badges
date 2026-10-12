@@ -13,6 +13,7 @@ type GithubRelease struct {
 }
 
 var errNoRelease = errors.New("no release")
+var githubClient = &http.Client{Timeout: 30 * time.Second}
 
 const GITHUB_API = "https://api.github.com"
 const GITHUB_OWNER = "siakhooi"
@@ -28,8 +29,6 @@ func GetReleaseVersion(token, repo string) (string, error) {
 	req.Header.Set("Accept", "application/vnd.github+json")
 	req.Header.Set("Authorization", "Bearer "+token)
 	req.Header.Set("X-GitHub-Api-Version", "2026-03-10")
-
-	var githubClient = &http.Client{Timeout: 30 * time.Second}
 
 	resp, err := githubClient.Do(req)
 	if err != nil {
