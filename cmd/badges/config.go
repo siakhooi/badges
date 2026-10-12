@@ -13,7 +13,7 @@ type Config struct {
 func GetConfig() (Config, error) {
 	configRaw, err := os.ReadFile(BADGES_CONFIG_FILE)
 	if err != nil {
-		return Config{}, fmt.Errorf("Fail to read config: %s, %s", BADGES_CONFIG_FILE, err)
+		return Config{}, fmt.Errorf("Fail to read config: %s, %w", BADGES_CONFIG_FILE, err)
 	}
 	var cfg Config
 	if err := yaml.Unmarshal(configRaw, &cfg); err != nil {
