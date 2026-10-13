@@ -40,7 +40,7 @@ func GetReleaseVersion(token, repo string) (string, error) {
 		return "", errNoRelease
 	}
 	if resp.StatusCode != http.StatusOK {
-		return "", fmt.Errorf("Github API returned %s", resp.Status)
+		return "", fmt.Errorf("fail to get latest release, API returned %s", resp.Status)
 	}
 	var release GithubRelease
 	if err := json.NewDecoder(resp.Body).Decode(&release); err != nil {

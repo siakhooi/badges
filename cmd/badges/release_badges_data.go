@@ -25,7 +25,7 @@ func GetReleaseBadges(token string, cfg Config) ([]Badge, error) {
 			release_version, err := GetReleaseVersion(token, repo)
 			color := COLOR_UNKNOWN
 			if err != nil {
-				err = fmt.Errorf("%s: %w", repo, err)
+				err = fmt.Errorf("fail to get latest version %s: %w", repo, err)
 				log.Print(err)
 				release_version = "---"
 				if !errors.Is(err, errNoRelease) {
