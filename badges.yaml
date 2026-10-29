@@ -9,6 +9,7 @@ releases:
   - query
   - webcounter
   - gh-pr
+  - textshift
   - box-drawing
   - number-to-chinese-words
   - siakhooi.github.io
