@@ -45,6 +45,7 @@ releases:
   - docker-image-template
   - wasm-c-template
   - python-cli-template
+  - python-uv-cli-template
   - github-action-bash-template
   - codility-java-template
 
